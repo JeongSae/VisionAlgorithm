@@ -5,7 +5,7 @@ from AlgorithmPython import ImageCrop
 from streamlit_drawable_canvas import st_canvas
 
 st.set_page_config(layout="wide")
-st.title("메인 타이틀")
+st.title("타이틀 메인")
 
 
 # Session State 기본값 초기화
