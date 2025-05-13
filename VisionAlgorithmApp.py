@@ -4,8 +4,9 @@ import numpy as np
 from AlgorithmPython import ImageCrop
 from streamlit_drawable_canvas import st_canvas
 
-st.title("메인 타이틀")
 st.set_page_config(layout="wide")
+st.title("메인 타이틀")
+
 
 # Session State 기본값 초기화
 if "language" not in st.session_state:
@@ -104,9 +105,19 @@ if uploaded_files:
     # 메인 영역: 원본 이미지 로드
     try:
         current_file = image_files[st.session_state.index]
-        original_image = Image.open(current_file).resize((300, 300)).convert("RGB")
+        original_image = Image.open(current_file).convert("RGB")
     except Exception as e:
         st.error(f"이미지를 불러오지 못했습니다: {e}")
+        
+    # 영역 크기 제한
+    max_width = 1280
+    if original_image.width > max_width:
+        ratio = max_width / original_image.width
+        new_width = int(original_image.width * ratio)
+        new_height = int(original_image.height * ratio)
+        resized_image = original_image.resize((new_width, new_height))
+    else:
+        resized_image = original_image
     
     # 메인 영역: Crop 모드 (cropping 기능이 활성화된 경우)
     if st.session_state.crop_mode:
@@ -116,10 +127,10 @@ if uploaded_files:
             fill_color="rgba(255, 165, 0, 0.3)",
             stroke_width=3,
             stroke_color="#ff0000",
-            background_image=original_image,
+            background_image=resized_image,
             update_streamlit=True,
-            height=original_image.height,
-            width=original_image.width,
+            height=resized_image.height,
+            width=resized_image.width,
             drawing_mode="rect"
         )
         if canvas_result.json_data is not None:
@@ -133,13 +144,13 @@ if uploaded_files:
                 height = shape.get("height")
                 crop_area = (left, top, left + width, top + height)
                 print(f"Crop Area: {crop_area}")
-                cropped_image = ImageCrop.ImageCrop(original_image, crop_area)
-                st.write("Before / After 크롭 결과:")
+                cropped_image = ImageCrop.ImageCrop(resized_image, crop_area)
+                st.write("Before / After 크롭 결과 (Before 크기만큼 Resize):")
                 col1, col2 = st.columns(2)
                 with col1:
-                    st.image(original_image, caption="Before")
+                    st.image(resized_image, caption="Before")
                 with col2:
-                    st.image(cropped_image, caption="After")
+                    st.image(cropped_image.resize((resized_image.width, resized_image.height)), caption="After")
             else:
                 st.info("드래그하여 크롭할 영역을 지정해주세요.")
         if st.button("크롭 완료"):

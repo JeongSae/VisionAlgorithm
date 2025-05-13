@@ -10,7 +10,7 @@ def ImageCrop(original_image, crop_area):
     x, y, w, h = crop_area
     
     # Perform cropping
-    cropped_image = cv_image[y:y+h, x:x+w]
+    cropped_image = cv_image[y:h, x:w]
     
     # Convert back to PIL Image
     cropped_image = Image.fromarray(cropped_image)
