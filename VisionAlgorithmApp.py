@@ -43,7 +43,7 @@ if uploaded_files:
             if st.button("개발 언어 확인"):
                 st.session_state.language_confirmed = True
                 st.session_state.language = selected_language
-                st.experimental_rerun()
+                st.rerun()
         else:
             st.write("선택된 개발 언어:", st.session_state.language)
         
@@ -54,7 +54,7 @@ if uploaded_files:
                 if st.button("카테고리 확인"):
                     st.session_state.category_confirmed = True
                     st.session_state.category = selected_category
-                    st.experimental_rerun()
+                    st.rerun()
             else:
                 st.write("선택된 카테고리:", st.session_state.category)
         
@@ -96,11 +96,11 @@ if uploaded_files:
         col_reset_prev, col_reset_initial = st.columns(2)
         if col_reset_prev.button("이전 옵션으로 돌아가기"):
             st.session_state.category_confirmed = False
-            st.experimental_rerun()
+            st.rerun()
         if col_reset_initial.button("처음 옵션으로 돌아가기"):
             st.session_state.language_confirmed = False
             st.session_state.category_confirmed = False
-            st.experimental_rerun()
+            st.rerun()
     
     # 메인 영역: 원본 이미지 로드
     try:
@@ -155,7 +155,7 @@ if uploaded_files:
                 st.info("드래그하여 크롭할 영역을 지정해주세요.")
         if st.button("크롭 완료"):
             st.session_state.crop_mode = False
-            st.experimental_rerun()
+            st.rerun()
     
     # 메인 영역: 이전/다음 이미지 네비게이션 (하단)
     col_left, col_center, col_right = st.columns([1,2,1])
