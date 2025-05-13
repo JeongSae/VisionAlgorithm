@@ -100,6 +100,7 @@ if uploaded_files:
         if col_reset_initial.button("처음 옵션으로 돌아가기"):
             st.session_state.language_confirmed = False
             st.session_state.category_confirmed = False
+            st.session_state.crop_mode = False
             st.rerun()
     
     # 메인 영역: 원본 이미지 로드
