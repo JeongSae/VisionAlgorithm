@@ -5,7 +5,7 @@ from AlgorithmPython import ImageCrop
 from streamlit_drawable_canvas import st_canvas
 
 st.set_page_config(layout="wide")
-st.title("타이틀 메인")
+st.title("개쩌는사진만들기")
 
 
 # Session State 기본값 초기화
@@ -167,3 +167,4 @@ if uploaded_files:
             st.session_state.index = (st.session_state.index + 1) % len(image_files)
 else:
     st.info("이미지 파일을 선택해주세요.")
+
