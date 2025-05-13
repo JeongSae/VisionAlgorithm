@@ -5,6 +5,7 @@ from AlgorithmPython import ImageCrop
 from streamlit_drawable_canvas import st_canvas
 
 st.title("메인 타이틀")
+st.set_page_config(layout="wide")
 
 # Session State 기본값 초기화
 if "language" not in st.session_state:
@@ -103,7 +104,7 @@ if uploaded_files:
     # 메인 영역: 원본 이미지 로드
     try:
         current_file = image_files[st.session_state.index]
-        original_image = Image.open(current_file).convert("RGB")
+        original_image = Image.open(current_file).resize((300, 300)).convert("RGB")
     except Exception as e:
         st.error(f"이미지를 불러오지 못했습니다: {e}")
     
@@ -117,8 +118,8 @@ if uploaded_files:
             stroke_color="#ff0000",
             background_image=original_image,
             update_streamlit=True,
-            height=original_image.size[1],
-            width=original_image.size[0],
+            height=original_image.height,
+            width=original_image.width,
             drawing_mode="rect"
         )
         if canvas_result.json_data is not None:
